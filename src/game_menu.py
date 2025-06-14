@@ -18,9 +18,9 @@ def draw_game():
     gate.gate_batch.draw()
     prongs.prong_middle.draw()
     pyglet.text.Label(
-        text=str(event_bus.score),
+        text="Score: " + str(event_bus.score),
         x=0,
         y=0,
         font_size=30,
-        color=(0, 0, 0)
+        color=(255, 255, 255)
     ).draw()

@@ -64,3 +64,4 @@ def is_clicked(x, y):
     # Or the finish tutorial button
     if 0 < x < finishTutButton.width and 0 < y < finishTutButton.height and event_bus.page == event_bus.Pages.TUTORIAL:
         event_bus.page = event_bus.Pages.GAME
+        event_bus.score = 0

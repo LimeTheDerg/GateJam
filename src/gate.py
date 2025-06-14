@@ -53,7 +53,7 @@ def spawn_gate():
 
 def move_gate(dt):
     for gate in gates_in_play:
-        gate.sprite.y -= 300 * dt
+        gate.sprite.y -= 300 * dt + (event_bus.frame//1000)
         if gate.sprite.y < -30:
             gates_in_play.remove(gate)
 
@@ -66,8 +66,15 @@ def check_collision():
             elif gate.type_of_gate is Gates.AND and (event_bus.LMBdown and event_bus.RMBdown) is True:
                 event_bus.score += 100
                 gates_in_play.remove(gate)
-            elif gate.type_of_gate is Gates.NOT and not(event_bus.LMBdown or event_bus.RMBdown) is True:
-                event_bus.score += 100
+            elif gate.type_of_gate is Gates.NOT and (event_bus.LMBdown or event_bus.RMBdown) is True:
+                event_bus.score -= 100
                 gates_in_play.remove(gate)
-        elif (event_bus.LMBdown or event_bus.RMBdown is True) and event_bus.frame % 10 == 0:
-            event_bus.score -= 200
+
+def check_false_press():
+    flag = False
+    for gate in gates_in_play:
+        if gate.sprite.y+gate.sprite.height//2 > 135 > gate.sprite.y-gate.sprite.height//2:
+            flag = True
+
+    if flag is False:
+        event_bus.score -= 200

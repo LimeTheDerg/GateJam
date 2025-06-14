@@ -22,6 +22,7 @@ def on_draw():
 import game_assets
 @game.event
 def on_mouse_press(x, y, button, modifiers):
+    gate.check_false_press()
     game_assets.is_clicked(x, y)
     if button == 1:
         event_bus.LMBdown = True
