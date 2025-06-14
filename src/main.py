@@ -6,6 +6,7 @@ from src.game_assets import music
 game = pyglet.window.Window(width=1280, height=720)
 game.set_visible(True)
 
+
 from game_menu import *
 
 @game.event
@@ -21,17 +22,21 @@ def on_draw():
 import game_assets
 @game.event
 def on_mouse_press(x, y, button, modifiers):
-    if game_assets.is_clicked(x, y):
-        game.clear()
-        game.dispatch_event('on_draw')
+    game_assets.is_clicked(x, y)
 
+import gate
+from BooPeeBoSong import notes
 # Game logic goes in this function so frame rate can stay consistent
 def update(dt):
     if event_bus.page == event_bus.Pages.GAME:
         event_bus.frame += 1
-    if event_bus.frame == 72:
+        if event_bus.frame/18+4 in notes:
+            gate.spawn_gate()
+        gate.move_gate(dt)
+    if event_bus.frame == 90 and event_bus.playing is False:
         music.play()
+        event_bus.frame = 18
+        event_bus.playing = True
 
 pyglet.clock.schedule_interval(update, 1 / 30)  # Run at 30 FPS
-
 pyglet.app.run()

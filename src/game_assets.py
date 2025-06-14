@@ -41,15 +41,26 @@ finishTutButton = pyglet.sprite.Sprite(
     img=finishTutButtonImg
 )
 
+# Gate images
+or_gate = pyglet.image.load('../assets/OR.png')
+or_gate.anchor_x = or_gate.width // 2
+or_gate.anchor_y = or_gate.height // 2
+
+and_gate = pyglet.image.load('../assets/AND.png')
+and_gate.anchor_x = and_gate.width // 2
+and_gate.anchor_y = and_gate.height // 2
+
+not_gate = pyglet.image.load('../assets/NOT.png')
+not_gate.anchor_x = not_gate.width // 2
+not_gate.anchor_y = not_gate.height // 2
+
+
 
 # Functions to determine if something is being clicked
 def is_clicked(x, y):
     # Check if it's the start button at the very beginning
     if 640-startButton.width//2 < x < 640+startButton.width//2 and 200-startButton.height//2 < y < 200+startButton.height//2 and event_bus.page == event_bus.Pages.MENU:
         event_bus.page = event_bus.Pages.TUTORIAL
-        return True
     # Or the finish tutorial button
     if 0 < x < finishTutButton.width and 0 < y < finishTutButton.height and event_bus.page == event_bus.Pages.TUTORIAL:
         event_bus.page = event_bus.Pages.GAME
-        return True
-    return False

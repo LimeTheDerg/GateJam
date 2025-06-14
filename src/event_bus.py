@@ -8,3 +8,5 @@ class Pages(enum.Enum):
 page = Pages.MENU
 
 frame = 0
+
+playing = False
