@@ -8,7 +8,7 @@ game.set_visible(True)
 
 from game_menu import *
 import lime
-from src.game_assets import music
+from game_assets import music
 
 
 @game.event
