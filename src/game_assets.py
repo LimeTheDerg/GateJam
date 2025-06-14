@@ -7,7 +7,7 @@ def resource_path(path):
     try:
         base = sys._MEIPASS
     except AttributeError:
-        base = os.path.abspath(".")
+        base = ".."
     return os.path.join(base, path)
 
 menu_batch = pyglet.graphics.Batch()
