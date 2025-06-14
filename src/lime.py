@@ -25,11 +25,9 @@ def lime_bounce():
     if lime_bad_frames > 0:
         lime.image=game_assets.lime_bad_img
     if event_bus.frame % 9 == 0 and up_vibe:
-        print("down\n")
         down_vibe = True
         up_vibe = False
     if event_bus.frame % 18 == 0 and down_vibe:
-        print("up\n")
         up_vibe = True
         down_vibe = False
     if up_vibe:

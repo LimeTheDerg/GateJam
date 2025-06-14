@@ -3,6 +3,7 @@ import gate
 import prongs
 import pyglet
 import event_bus
+import lime
 
 def draw_menu():
     game_assets.background.blit(0, 0)
@@ -37,3 +38,6 @@ def draw_end():
         anchor_x='center',
         anchor_y='center'
     ).draw()
+    lime.lime.scale_y = 1
+    lime.lime.scale_x = 1
+    lime.lime_batch.draw()
