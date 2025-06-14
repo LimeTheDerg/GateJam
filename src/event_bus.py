@@ -6,3 +6,5 @@ class Pages(enum.Enum):
     GAME = 3
 
 page = Pages.MENU
+
+frame = 0

@@ -1,8 +1,15 @@
+from importlib.util import find_spec
+
 import pyglet
 import event_bus
-batch = pyglet.graphics.Batch()
+menu_batch = pyglet.graphics.Batch()
+tutorial_batch = pyglet.graphics.Batch()
 
 # The various assets used in the game
+
+# The actual song
+music = pyglet.media.load('../assets/song.mp3')
+
 # Background
 background = pyglet.image.load('../assets/GateJamBG.png')
 
@@ -18,15 +25,31 @@ startButtonImg.anchor_y = startButtonImg.height // 2
 startButton = pyglet.sprite.Sprite(
     x=640,
     y=200,
-    batch=batch,
+    batch=menu_batch,
     img=startButtonImg
 )
 
+# Tutorial Screen
+tutorial = pyglet.image.load('../assets/GateJamTutorial.png')
+
+# Finish Tutorial Button
+finishTutButtonImg = pyglet.image.load('../assets/FinishTutorial.png')
+finishTutButton = pyglet.sprite.Sprite(
+    x=0,
+    y=0,
+    batch=tutorial_batch,
+    img=finishTutButtonImg
+)
 
 
 # Functions to determine if something is being clicked
 def is_clicked(x, y):
-    if 640-startButton.width//2 < x < 640+startButton.width//2 and 200-startButton.height//2 < y < 200+startButton.height//2:
+    # Check if it's the start button at the very beginning
+    if 640-startButton.width//2 < x < 640+startButton.width//2 and 200-startButton.height//2 < y < 200+startButton.height//2 and event_bus.page == event_bus.Pages.MENU:
         event_bus.page = event_bus.Pages.TUTORIAL
+        return True
+    # Or the finish tutorial button
+    if 0 < x < finishTutButton.width and 0 < y < finishTutButton.height and event_bus.page == event_bus.Pages.TUTORIAL:
+        event_bus.page = event_bus.Pages.GAME
         return True
     return False
