@@ -3,6 +3,7 @@ from enum import Enum
 import pyglet
 import game_assets
 import event_bus
+import lime
 
 gate_batch = pyglet.graphics.Batch()
 
@@ -68,12 +69,14 @@ def check_collision():
                 gates_in_play.remove(gate)
             elif gate.type_of_gate is Gates.NOT and (event_bus.LMBdown or event_bus.RMBdown) is True:
                 event_bus.score -= 200
+                lime.lime_bad_frames += 10
                 gates_in_play.remove(gate)
         if 0 > gate.sprite.y and gate.type_of_gate is Gates.NOT:
             event_bus.score += 100
             gates_in_play.remove(gate)
         if 0 > gate.sprite.y and gate.type_of_gate is not Gates.NOT:
             event_bus.score -= 200
+            lime.lime_bad_frames += 10
             gates_in_play.remove(gate)
 
 def check_false_press():
@@ -84,3 +87,4 @@ def check_false_press():
 
     if flag is False:
         event_bus.score -= 200
+        lime.lime_bad_frames += 10

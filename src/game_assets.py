@@ -1,7 +1,7 @@
-from importlib.util import find_spec
 
 import pyglet
 import event_bus
+
 menu_batch = pyglet.graphics.Batch()
 tutorial_batch = pyglet.graphics.Batch()
 
@@ -53,6 +53,10 @@ and_gate.anchor_y = and_gate.height // 2
 not_gate = pyglet.image.load('../assets/NOT.png')
 not_gate.anchor_x = not_gate.width // 2
 not_gate.anchor_y = not_gate.height // 2
+
+# Lime the dragon
+lime_good_img = pyglet.image.load('../assets/LimeGood.png')
+lime_bad_img = pyglet.image.load('../assets/LimeBad.png')
 
 
 
