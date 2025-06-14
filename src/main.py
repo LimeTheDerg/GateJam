@@ -23,11 +23,23 @@ import game_assets
 @game.event
 def on_mouse_press(x, y, button, modifiers):
     game_assets.is_clicked(x, y)
+    if button == 1:
+        event_bus.LMBdown = True
+    elif button == 4:
+        event_bus.RMBdown = True
+
+@game.event
+def on_mouse_release(x, y, button, modifiers):
+    if button == 1:
+        event_bus.LMBdown = False
+    elif button == 4:
+        event_bus.RMBdown = False
 
 import gate
 from BooPeeBoSong import notes
 # Game logic goes in this function so frame rate can stay consistent
 def update(dt):
+    gate.check_collision()
     if event_bus.page == event_bus.Pages.GAME:
         event_bus.frame += 1
         if event_bus.frame/18+4 in notes:

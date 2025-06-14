@@ -1,11 +1,25 @@
 import random
-
+from enum import Enum
 import pyglet
 import game_assets
+import event_bus
 
 gate_batch = pyglet.graphics.Batch()
 
 gates_in_play = []
+
+class Gates(Enum):
+    OR = 1
+    AND = 2
+    NOT = 3
+
+class Gate:
+    type_of_gate = None
+    sprite = None
+
+    def __init__(self, type_of_gate, sprite):
+        self.type_of_gate = type_of_gate
+        self.sprite = sprite
 
 def spawn_gate():
     gate = random.randint(1,5)
@@ -16,7 +30,8 @@ def spawn_gate():
             img=game_assets.or_gate,
             batch=gate_batch
         )
-        gates_in_play.append(or_gate)
+        new_gate = Gate(Gates.OR, or_gate)
+        gates_in_play.append(new_gate)
     elif gate == 3 or gate == 4:
         and_gate = pyglet.sprite.Sprite(
             x=320,
@@ -24,18 +39,35 @@ def spawn_gate():
             img=game_assets.and_gate,
             batch=gate_batch
         )
-        gates_in_play.append(and_gate)
+        new_gate = Gate(Gates.AND, and_gate)
+        gates_in_play.append(new_gate)
     elif gate == 5:
         not_gate = pyglet.sprite.Sprite(
             x=320,
             y=850,
             img=game_assets.not_gate,
-            batch=gate_batch
+            batch=gate_batch,
         )
-        gates_in_play.append(not_gate)
+        new_gate = Gate(Gates.NOT, not_gate)
+        gates_in_play.append(new_gate)
 
 def move_gate(dt):
     for gate in gates_in_play:
-        gate.y -= 300 * dt
-        if gate.y < -30:
+        gate.sprite.y -= 300 * dt
+        if gate.sprite.y < -30:
             gates_in_play.remove(gate)
+
+def check_collision():
+    for gate in gates_in_play:
+        if gate.sprite.y+gate.sprite.height//2 > 135 > gate.sprite.y-gate.sprite.height//2:
+            if gate.type_of_gate is Gates.OR and (event_bus.LMBdown or event_bus.RMBdown) is True:
+                event_bus.score += 100
+                gates_in_play.remove(gate)
+            elif gate.type_of_gate is Gates.AND and (event_bus.LMBdown and event_bus.RMBdown) is True:
+                event_bus.score += 100
+                gates_in_play.remove(gate)
+            elif gate.type_of_gate is Gates.NOT and not(event_bus.LMBdown or event_bus.RMBdown) is True:
+                event_bus.score += 100
+                gates_in_play.remove(gate)
+        elif (event_bus.LMBdown or event_bus.RMBdown is True) and event_bus.frame % 10 == 0:
+            event_bus.score -= 200

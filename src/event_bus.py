@@ -9,4 +9,9 @@ page = Pages.MENU
 
 frame = 0
 
+score = 0
+
 playing = False
+
+LMBdown = False
+RMBdown = False
