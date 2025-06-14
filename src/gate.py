@@ -67,8 +67,14 @@ def check_collision():
                 event_bus.score += 100
                 gates_in_play.remove(gate)
             elif gate.type_of_gate is Gates.NOT and (event_bus.LMBdown or event_bus.RMBdown) is True:
-                event_bus.score -= 100
+                event_bus.score -= 200
                 gates_in_play.remove(gate)
+        if 0 > gate.sprite.y and gate.type_of_gate is Gates.NOT:
+            event_bus.score += 100
+            gates_in_play.remove(gate)
+        if 0 > gate.sprite.y and gate.type_of_gate is not Gates.NOT:
+            event_bus.score -= 200
+            gates_in_play.remove(gate)
 
 def check_false_press():
     flag = False

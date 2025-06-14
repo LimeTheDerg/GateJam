@@ -18,22 +18,25 @@ def on_draw():
         draw_tutorial()
     elif event_bus.page is event_bus.Pages.GAME:
         draw_game()
+    elif event_bus.page is event_bus.Pages.END:
+        draw_end()
 
 import game_assets
 @game.event
 def on_mouse_press(x, y, button, modifiers):
-    gate.check_false_press()
+    if event_bus.page is not event_bus.Pages.END:
+        gate.check_false_press()
     game_assets.is_clicked(x, y)
-    if button == 1:
+    if button == pyglet.window.mouse.LEFT:
         event_bus.LMBdown = True
-    elif button == 4:
+    elif button == pyglet.window.mouse.RIGHT:
         event_bus.RMBdown = True
 
 @game.event
 def on_mouse_release(x, y, button, modifiers):
-    if button == 1:
+    if button == pyglet.window.mouse.LEFT:
         event_bus.LMBdown = False
-    elif button == 4:
+    elif button == pyglet.window.mouse.RIGHT:
         event_bus.RMBdown = False
 
 import gate
@@ -46,9 +49,11 @@ def update(dt):
         if event_bus.frame/18+4 in notes:
             gate.spawn_gate()
         gate.move_gate(dt)
+        if event_bus.frame == 2550:
+            event_bus.page = event_bus.Pages.END
     if event_bus.frame == 90 and event_bus.playing is False:
         music.play()
-        event_bus.frame = 18
+        event_bus.frame = 2000 # was 18
         event_bus.playing = True
 
 pyglet.clock.schedule_interval(update, 1 / 30)  # Run at 30 FPS

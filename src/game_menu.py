@@ -24,3 +24,16 @@ def draw_game():
         font_size=30,
         color=(255, 255, 255)
     ).draw()
+
+def draw_end():
+    game_assets.background.blit(0, 0)
+    pyglet.text.Label(
+        text="Your Final Score was: " + str(event_bus.score),
+        x=320,
+        y=360,
+        font_size=30,
+        color=(255, 255, 255),
+        font_name='monospace',
+        anchor_x='center',
+        anchor_y='center'
+    ).draw()
