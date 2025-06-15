@@ -1,4 +1,4 @@
-notes = [
+notes = {
     # Measure 1
     1, 2,
 
@@ -94,4 +94,4 @@ notes = [
 
     # Measure 32
     125, 125.5, 126.5, 127
-]
+}

@@ -17,6 +17,7 @@ def draw_tutorial():
 def draw_game():
     game_assets.background.blit(0, 0)
     gate.gate_batch.draw()
+    prongs.prong_middle.y = 135 + 200*(event_bus.frame/2300)
     prongs.prong_middle.draw()
     pyglet.text.Label(
         text="Score: " + str(event_bus.score),
@@ -40,4 +41,5 @@ def draw_end():
     ).draw()
     lime.lime.scale_y = 1
     lime.lime.scale_x = 1
+    lime.lime.image = game_assets.lime_good_img
     lime.lime_batch.draw()
